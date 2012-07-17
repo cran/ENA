@@ -10,11 +10,12 @@
 #' 	\item{"ld"} {Copy the lower triangular portion of the matrix to the upper triangular portion.}
 #' 	\item{"ud"} {Copy the upper triangular portion of the matrix to the lower triangular portion.}
 #' }
+#' @param adjacencyList Logical. If false, returns the symmetric matrix (the same format as the input). If true, returns an adjacency list representing the upper triangular portion of the adjacency matrix with addressing based on the row.names of the matrix provided.
 #' @return The symmetric matrix
 #' @export
 #' @author Jeffrey D. Allen \email{Jeffrey.Allen@@UTSouthwestern.edu}
 symmetricize <-
-function(matrix, method=c("max", "min","avg", "ld", "ud")){
+function(matrix, method=c("max", "min","avg", "ld", "ud"), adjacencyList=FALSE){
 	method <- match.arg(method)
 	
 	if (missing(matrix)){
@@ -59,5 +60,20 @@ function(matrix, method=c("max", "min","avg", "ld", "ud")){
 			x[udi] <- apply(rbind(ld,ud),2,mean);
 		}
 	}	
-	return(x);
+	
+	if (!adjacencyList){
+		#return the adjacency matrix
+		return(x)
+	}
+	else{
+		#convert to adjacency list and add addressing
+		if (is.null(rownames(matrix))){
+			stop("You requested adjacency list format, but the matrix provided has no (row) names.")
+		}		
+		names <- rownames(matrix)		
+		add <- getTableAddressing(names)
+		toReturn <- (cbind(add, x[upper.tri(x)]))		
+		colnames(toReturn) <- c("Source", "Dest", "Symmetric")
+		return(toReturn)
+	}
 }

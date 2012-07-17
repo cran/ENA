@@ -3,12 +3,30 @@
 \title{Make a matrix symmetric}
 \usage{
   symmetricize(matrix,
-    method = c("max", "min", "avg", "ld", "ud"))
+    method = c("max", "min", "avg", "ld", "ud"),
+    adjacencyList = FALSE)
 }
 \arguments{
   \item{matrix}{The matrix to make symmatric}
 
-  \item{method}{The method to use to make the}
+  \item{method}{The method to use to make the matrix
+  symmetric. Default is to take the maximum. \itemize{
+  \item{"max"} {For each position, \eqn{m_{i,j}}, use the
+  maxiumum of \eqn{(m_{i,j}, m_{j,i})}} \item{"min"} {For
+  each position, \eqn{m_{i,j}}, use the minimum of
+  \eqn{(m_{i,j}, m_{j,i})}} \item{"avg"} {For each
+  position, \eqn{m_{i,j}}, use the mean: \eqn{(m_{i,j} +
+  m_{j,i})/2}} \item{"ld"} {Copy the lower triangular
+  portion of the matrix to the upper triangular portion.}
+  \item{"ud"} {Copy the upper triangular portion of the
+  matrix to the lower triangular portion.} }}
+
+  \item{adjacencyList}{Logical. If false, returns the
+  symmetric matrix (the same format as the input). If true,
+  returns an adjacency list representing the upper
+  triangular portion of the adjacency matrix with
+  addressing based on the row.names of the matrix
+  provided.}
 }
 \value{
   The symmetric matrix
