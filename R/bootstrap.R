@@ -1,4 +1,4 @@
-#' Bootstrap the reconstruction of a network from a dataset
+#' Bootstrap the reconstruction of a network
 #' 
 #' Randomly selects a subset of the avaialble samples and performs a network reconstruction using the selected technique. Aggregate all produced networks into a single network using the \code{ena} method.
 #' @param data The dataset to reconstruct. Each column should contain one sample, and each row should contain one gene.
@@ -10,6 +10,15 @@
 #' @return A data.frame representing the adjacency list of the ENA-produced network.
 #' @export
 #' @author Jeffrey D. Allen \email{Jeffrey.Allen@@UTSouthwestern.edu}
+#' #Load in the sample Protein-Protein-Interaction data that comes with this package.
+#' data(PPI)
+#' set.seed(123)
+#' 
+#' #Simulate a dataset based on the 44-gene topology provided.
+#' sim <- simulateNetwork(net44)
+#' 
+#' boot <- bootstrap(sim, "buildGenenet", .9, 10, )
+#' bootMat <- tri2mat(rownames(sim), boot[,3])
 bootstrap <- function(data, fun, sample.percentage=0.7, iterations=150, cluster, truth){
 	if (typeof(fun) != "character"){
 		stop("You must provide the character name of the function you want to bootstrap. For instance, fun=\"buildSpace\"")
