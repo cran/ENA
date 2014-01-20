@@ -14,11 +14,10 @@
 #' # of the matrix
 #' gn <- abs(buildGenenet(net))
 #' gn <- gn[upper.tri(gn)]
+#' @importFrom GeneNet ggm.estimate.pcor
 #' 
 buildGenenet <-
-function(data){
-	library(GeneNet)
-	
+function(data){	
 	inferred.pcor <- ggm.estimate.pcor(t(data));
 	
 	geneList <- rownames(data);

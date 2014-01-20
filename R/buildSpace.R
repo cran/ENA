@@ -13,9 +13,9 @@
 #' #Process with SPACE
 #' sp <- abs(buildSpace(net))
 #' sp <- sp[upper.tri(sp)]
+#' @importFrom space space.joint
 buildSpace <-
 function(data){
-	library(space)
 	#number of samples
 	n=ncol(data)
 	

@@ -14,10 +14,11 @@
 #' # of the matrix
 #' ar <- abs(buildAracne(net))
 #' ar <- ar[upper.tri(ar)]
+#' @importFrom parmigene knnmi.all
+#' @importFrom parmigene aracne.a
 #' 
 buildAracne <-
 function(mat){
-	library(parmigene)
 	mi <- knnmi.all(mat)
 	grn <- aracne.a(mi, 0.05);
 	return (grn);
